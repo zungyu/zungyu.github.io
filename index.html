@@ -25,7 +25,7 @@
     --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
     --sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
-    --maxw: 1040px;
+    --maxw: 960px;
   }
 
   *{ box-sizing:border-box; }
@@ -117,17 +117,21 @@
   /* ============ HERO ============ */
   .hero{
     padding:84px 0 60px;
-    display:grid; grid-template-columns:1.05fr 1fr; gap:40px; align-items:center;
+    display:grid; grid-template-columns:1fr 190px; gap:36px; align-items:start;
   }
   .hero-copy h1{
     font-size:clamp(40px,6vw,64px);
     line-height:1.02; margin:14px 0 6px; letter-spacing:-.01em;
   }
   .hero-role{
-    font-family:var(--mono); font-size:14px; color:var(--ink-soft);
-    letter-spacing:.04em; margin-bottom:18px;
+    font-family:var(--sans); font-size:17.5px; color:var(--ink-soft);
+    letter-spacing:.01em; margin-bottom:24px; font-weight:500;
   }
-  .hero-copy p{ color:var(--ink-soft); max-width:480px; font-size:16.5px; }
+  .hero-affiliation{
+    text-transform:none; margin:8px 0 2px;
+  }
+  .hero-affiliation::before{ display:none; }
+  .hero-intro{ color:var(--ink-soft); max-width:480px; font-size:16.5px; margin-top:0; }
   .hero-actions{ display:flex; gap:12px; margin-top:26px; flex-wrap:wrap; }
   .btn{
     font-family:var(--mono); font-size:13.5px; letter-spacing:.02em;
@@ -141,17 +145,21 @@
   .btn-ghost:hover{ border-color:var(--brass); color:var(--brass); }
 
   .hero-visual{
-    position:relative; border:1px solid var(--line); border-radius:14px;
-    background:var(--paper-soft); overflow:hidden; aspect-ratio:4/3;
+    display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+    padding-top:4px;
   }
-  .hero-visual figcaption{
-    position:absolute; left:14px; bottom:12px; font-family:var(--mono);
-    font-size:11px; color:var(--ink-soft); letter-spacing:.04em;
+  .photo-frame{
+    position:relative; width:168px;
+    border:1px solid var(--line); border-radius:14px;
+    background:var(--paper-soft); padding:10px 10px 12px;
+  }
+  .photo-frame img{
+    width:100%; border-radius:8px; display:block; object-fit:cover;
   }
 
   @media (max-width:880px){
     .hero{ grid-template-columns:1fr; padding-top:64px; }
-    .hero-copy p{ max-width:none; }
+    .hero-intro{ max-width:none; }
   }
 
   /* ============ SECTIONS ============ */
@@ -210,17 +218,67 @@
   }
   .pill.is-award{ background:var(--brass-soft); color:#7A5A1E; }
 
+  .media{
+    margin:14px 0 4px; border-radius:10px; overflow:hidden;
+    border:1px solid var(--line); background:#000;
+  }
+  .media--video{ aspect-ratio:16/9; }
+  .media--vertical{ aspect-ratio:9/16; max-width:230px; }
+  .media iframe{ width:100%; height:100%; border:0; display:block; }
+
+  .video-block{ margin:14px 0 16px; }
+  .video-block.is-vertical{ max-width:230px; }
+  .video-cover{
+    position:relative; border:1px solid var(--line); border-radius:10px 10px 0 0;
+    overflow:hidden; background:#000; aspect-ratio:16/9;
+  }
+  .video-block.is-vertical .video-cover{ aspect-ratio:9/16; }
+  .video-cover img{ width:100%; height:100%; object-fit:cover; display:block; opacity:.94; }
+  .play-btn{
+    width:100%; display:flex; align-items:center; justify-content:center; gap:8px;
+    font-family:var(--mono); font-size:12.5px; letter-spacing:.02em; cursor:pointer;
+    padding:10px; border:1px solid var(--line); border-top:none; border-radius:0 0 10px 10px;
+    background:var(--paper-soft); color:var(--ink); transition:background .15s, color .15s;
+  }
+  .play-btn:hover{ background:var(--ink); color:var(--paper-soft); }
+  .video-frame{
+    display:none; border-radius:10px; overflow:hidden; border:1px solid var(--line);
+    aspect-ratio:16/9; background:#000;
+  }
+  .video-block.is-vertical .video-frame{ aspect-ratio:9/16; }
+  .video-frame iframe{ width:100%; height:100%; border:0; display:block; }
+  .video-block.is-playing .video-cover,
+  .video-block.is-playing .play-btn{ display:none; }
+  .video-block.is-playing .video-frame{ display:block; }
+
   /* ============ PUBLICATIONS / AWARDS ============ */
   .pub-card{
-    border:1px solid var(--line); border-radius:12px; padding:22px 26px;
-    background:var(--paper-soft); display:flex; gap:18px; align-items:flex-start;
+    position:relative; display:flex; gap:20px; align-items:flex-start;
+    border:1px solid var(--line); border-radius:12px; padding:24px 26px;
+    background:var(--paper-soft); text-decoration:none; color:var(--ink);
+    transition:border-color .15s, box-shadow .15s;
   }
+  .pub-card:hover{ border-color:var(--brass); box-shadow:0 8px 20px rgba(22,36,43,.08); }
+  .pub-thumb{
+    flex-shrink:0; width:140px; height:190px; border:1px solid var(--line); border-radius:8px;
+    overflow:hidden; background:#fff;
+  }
+  .pub-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .pub-badge{
+    display:inline-block; font-family:var(--mono); font-size:11.5px; padding:4px 10px;
+    border-radius:20px; background:var(--moss-soft); color:var(--moss); letter-spacing:.02em;
+    margin-bottom:11px;
+  }
+  .pub-card h3{ font-size:18px; line-height:1.35; margin-bottom:9px; }
+  .pub-authors{ font-size:14.5px; color:var(--ink-soft); margin:0 0 4px; }
+  .pub-authors strong{ color:var(--ink); text-decoration:underline; text-decoration-color:var(--brass); text-underline-offset:2px; }
+  .pub-venue{ font-family:var(--serif); font-style:italic; font-size:14px; color:var(--ink-soft); margin:0; }
   .pub-tag{
-    font-family:var(--mono); font-size:11px; padding:4px 9px; border-radius:6px;
-    background:var(--ink); color:var(--paper-soft); white-space:nowrap; letter-spacing:.04em;
+    position:absolute; top:24px; right:26px;
+    font-family:var(--mono); font-size:11px; padding:5px 12px; border-radius:20px;
+    border:1px solid var(--line); color:var(--ink-soft); background:var(--paper);
   }
-  .pub-card h3{ font-size:17.5px; margin-bottom:6px; }
-  .pub-meta{ font-family:var(--mono); font-size:12.5px; color:var(--ink-soft); }
+  @media (max-width:560px){ .pub-tag{ position:static; display:inline-block; margin-bottom:12px; } .pub-card{ flex-wrap:wrap; } .pub-thumb{ width:100px; height:136px; } }
 
   .award-row{
     display:flex; gap:22px; padding:18px 0; border-bottom:1px solid var(--line);
@@ -236,15 +294,6 @@
   .skill-group{ border-top:1px solid var(--line); padding-top:14px; }
   .skill-group h3{ font-family:var(--mono); font-size:12.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); font-weight:500; margin-bottom:12px; }
   @media (max-width:640px){ .skill-groups{ grid-template-columns:1fr; } }
-
-  /* ============ EDUCATION ============ */
-  .edu-card{
-    display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap;
-    border:1px solid var(--line); border-radius:12px; padding:24px 26px; background:var(--paper-soft);
-  }
-  .edu-card h3{ font-size:18px; }
-  .edu-card .ink-soft, .edu-meta{ color:var(--ink-soft); font-size:14.5px; }
-  .edu-gpa{ font-family:var(--mono); font-size:13px; color:var(--moss); white-space:nowrap; align-self:flex-start; }
 
   /* ============ CONTACT / FOOTER ============ */
   .contact{ text-align:left; }
@@ -280,8 +329,8 @@
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">Menu</button>
     <nav id="siteNav">
       <a href="#about">About</a>
-      <a href="#projects">Projects</a>
       <a href="#publications">Publications</a>
+      <a href="#projects">Projects</a>
       <a href="#awards">Awards</a>
       <a href="#skills">Skills</a>
       <a href="#contact">Contact</a>
@@ -294,76 +343,36 @@
   <!-- ============ HERO ============ -->
   <section class="hero" id="top" style="border-top:none;">
     <div class="hero-copy">
-      <p class="eyebrow">KYONGGI UNIVERSITY · RV LAB</p>
       <h1>Jungyu Kim</h1>
+      <p class="eyebrow hero-affiliation">Kyonggi University · RV Lab</p>
       <p class="hero-role">Mechanical Systems Engineering — Intelligent Robotics</p>
-      <p>Undergraduate researcher building manipulators that move <em>with</em> the people around them — from URDF and Isaac Sim to real-time RTDE control on UR10e and Doosan arms.</p>
+      <p class="hero-intro">Undergraduate researcher building manipulators that move <em>with</em> the people around them — from URDF and Isaac Sim to real-time RTDE control on UR10e and Doosan arms.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="Jungyu_Kim_CV.pdf" target="_blank" rel="noopener">Download CV ↓</a>
-        <a class="btn btn-ghost" href="mailto:jg2087@naver.com">Email</a>
-        <a class="btn btn-ghost" href="#" target="_blank" rel="noopener"><!-- TODO: replace with your GitHub URL -->GitHub</a>
+        <a class="btn btn-ghost" href="https://sites.google.com/view/rv-lab" target="_blank" rel="noopener">Lab Homepage ↗</a>
       </div>
     </div>
 
-    <figure class="hero-visual" aria-hidden="true">
-      <svg viewBox="0 0 920 460" xmlns="http://www.w3.org/2000/svg" id="armSvg">
-        <defs>
-          <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
-            <path d="M28 0H0V28" fill="none" stroke="#C9D6D5" stroke-width="1" opacity="0.55"/>
-          </pattern>
-        </defs>
-        <rect width="920" height="460" fill="url(#grid)"/>
-
-        <!-- mount plate -->
-        <rect x="36" y="358" width="96" height="24" rx="4" fill="#16242B" opacity="0.07"/>
-        <line x1="40" y1="382" x2="128" y2="382" stroke="#C9D6D5" stroke-width="2"/>
-
-        <!-- base joint -->
-        <circle class="joint pop" cx="84" cy="358" r="12" fill="#B8893A" stroke="#16242B" stroke-width="2"/>
-
-        <!-- upper arm link -->
-        <path class="link draw" d="M84 358 L236 244" stroke="#16242B" stroke-width="11" stroke-linecap="round" fill="none" pathLength="1"/>
-
-        <g class="arm-idle">
-          <circle class="joint pop" cx="236" cy="244" r="9" fill="#F5F8F7" stroke="#B8893A" stroke-width="3"/>
-          <path class="link draw" d="M236 244 L404 270" stroke="#16242B" stroke-width="10" stroke-linecap="round" fill="none" pathLength="1"/>
-          <circle class="joint pop" cx="404" cy="270" r="8" fill="#F5F8F7" stroke="#B8893A" stroke-width="3"/>
-          <path class="link draw" d="M404 270 L520 228" stroke="#16242B" stroke-width="9" stroke-linecap="round" fill="none" pathLength="1"/>
-          <circle class="joint pop" cx="520" cy="228" r="7" fill="#E7CE9C" stroke="#B8893A" stroke-width="2"/>
-          <path class="link draw" d="M520 228 L556 206" stroke="#16242B" stroke-width="6" stroke-linecap="round" fill="none" pathLength="1"/>
-          <path class="link draw" d="M520 228 L552 246" stroke="#16242B" stroke-width="6" stroke-linecap="round" fill="none" pathLength="1"/>
-        </g>
-
-        <!-- connection pulse -->
-        <circle class="pulse" cx="588" cy="222" r="5" fill="#4F7A6E"/>
-
-        <!-- stylised open hand, line art -->
-        <g class="hand">
-          <path class="link draw-hand" d="M612 268 C606 244 612 224 628 216 C632 196 648 188 654 204 C662 188 676 188 678 206 C686 192 700 196 698 214 C708 206 718 214 712 230 C722 252 712 278 690 286 C662 296 624 292 612 268 Z"
-                fill="none" stroke="#16242B" stroke-width="4.5" stroke-linecap="round" pathLength="1"/>
-        </g>
-
-        <text x="40" y="430" font-family="JetBrains Mono, monospace" font-size="12" fill="#5B6C72" letter-spacing="1">BASE</text>
-        <text x="500" y="430" font-family="JetBrains Mono, monospace" font-size="12" fill="#5B6C72" letter-spacing="1">END-EFFECTOR</text>
-        <text x="700" y="430" font-family="JetBrains Mono, monospace" font-size="12" fill="#5B6C72" letter-spacing="1">HUMAN</text>
-      </svg>
-      <figcaption>kinematic chain — reaching toward the people it works with</figcaption>
+    <figure class="hero-visual">
+      <div class="photo-frame">
+        <img src="profile.jpg" alt="Portrait of Jungyu Kim" loading="lazy">
+      </div>
     </figure>
   </section>
 
   <!-- ============ ABOUT ============ -->
   <section id="about">
     <div class="section-head reveal">
-      <p class="eyebrow">ABOUT</p>
-      <h2>Robotics, built bottom-up</h2>
+      <h2>About</h2>
     </div>
     <div class="about-grid">
       <div class="about-body reveal">
         <p>I'm a fourth-year undergraduate in <strong>Mechanical Systems Engineering</strong> at Kyonggi University, working toward graduate research in robotics through <strong>RV Lab</strong>.</p>
-        <p>My research centers on <strong>manipulator control</strong> — converting CAD assemblies into URDF models, simulating them in NVIDIA Isaac Sim, and closing the loop with real-time control. I've implemented RTDE-based end-effector control for a UR10e and a Doosan arm, and I'm currently part of an external collaboration building a motion-engine pipeline for surgical robot automation, alongside undergraduate research into Diffusion-Policy-based imitation learning.</p>
-        <p>I think of this as <strong>human-centered robotics</strong>: a manipulator is only as good as its ability to work safely and predictably alongside the people around it — the premise running from my earliest autonomous-driving projects through to surgical-robot motion sequences today.</p>
+        <p>My research centers on <strong>manipulator control</strong> — converting CAD assemblies into URDF models, simulating them in NVIDIA Isaac Sim, and closing the loop with real-time control. I've implemented RTDE-based end-effector control for a UR10e and a Doosan arm, and I'm currently part of an external collaboration building a motion-engine pipeline for precision <strong>organ-procurement robotics</strong>. Computer vision runs through a lot of this work too — from OpenCV/YOLO-based object detection to classical lane-following pipelines — alongside undergraduate research into Diffusion-Policy-based imitation learning.</p>
+        <p>I think of this as <strong>human-centered robotics</strong>: a manipulator is only as good as its ability to work safely and predictably alongside the people around it. Even when the work doesn't directly touch a person — like the organ-procurement sequences I build now, where the standard of precision and care is different from human surgery — that same discipline is what I'm practicing. It's the thread running from my earliest computer-vision-based driving projects through to manipulator control today.</p>
         <div class="chips">
           <span class="chip">Robot Manipulator Control</span>
+          <span class="chip">Computer Vision</span>
           <span class="chip">URDF Modeling & Simulation</span>
           <span class="chip">Motion Planning</span>
           <span class="chip">Imitation Learning</span>
@@ -378,11 +387,29 @@
     </div>
   </section>
 
+  <!-- ============ PUBLICATIONS ============ -->
+  <section id="publications">
+    <div class="section-head reveal">
+      <h2>Publications</h2>
+    </div>
+    <a class="pub-card reveal" href="https://drive.google.com/file/d/161JbZspkgfC2VCBk81XWZ0z0HmuM8W4Q/view?usp=sharing" target="_blank" rel="noopener">
+      <span class="pub-tag">Paper</span>
+      <div class="pub-thumb">
+        <img src="paper.jpg" alt="Paper thumbnail" loading="lazy">
+      </div>
+      <div>
+        <span class="pub-badge">Domestic · 2026</span>
+        <h3>Perspective Transform-Based Data Augmentation to Mitigate Minority Class Imbalance for Road Marking Semantic Segmentation</h3>
+        <p class="pub-authors">성민준, 유강민, <strong>김준규</strong>, 한승호, 양승훈, 최민성</p>
+        <p class="pub-venue">The Proceedings of the 2026 ICROS Conference</p>
+      </div>
+    </a>
+  </section>
+
   <!-- ============ PROJECTS ============ -->
   <section id="projects">
     <div class="section-head reveal">
-      <p class="eyebrow">PROJECTS</p>
-      <h2>Seven projects, one direction</h2>
+      <h2>Projects</h2>
       <p>Ordered roughly as they happened — each one carrying something forward into the next.</p>
     </div>
 
@@ -393,7 +420,7 @@
         <h3>Organ Extraction Robot Project</h3>
         <span class="card-date">Apr 2026 — Present</span>
       </div>
-      <p class="card-desc">Collaborating with an external company on robotic surgery automation, building a full motion-engine sequence implementation for surgical robot control.</p>
+      <p class="card-desc">Collaborating with an external company on automated organ procurement, building a full motion-engine sequence implementation for precision robotic extraction control.</p>
       <ul class="card-roles">
         <li>Converted robot CAD files to URDF format and visualized them in Isaac Sim for control</li>
         <li>Implemented the complete cutting sequence within the motion-engine pipeline</li>
@@ -421,6 +448,13 @@
         <h3>VR Teleoperation-Based Imitation Learning Data Collection</h3>
         <span class="card-date">Jan 2026 — Apr 2026</span>
       </div>
+      <div class="video-block" data-embed-src="https://www.youtube-nocookie.com/embed/1U6kUQbT9ao?autoplay=1" data-embed-title="VR teleoperation data collection demo">
+        <div class="video-cover">
+          <img src="vr-teleop.jpg" alt="VR teleoperation demo cover" loading="lazy">
+        </div>
+        <button class="play-btn" type="button">▶ Play video</button>
+        <div class="video-frame"></div>
+      </div>
       <p class="card-desc">Collected demonstration data for robotic manipulation using Isaac Sim and ACT policy learning.</p>
       <ul class="card-roles">
         <li>Operated a WebXR-based VR teleoperation system to collect grasping demonstrations</li>
@@ -434,6 +468,13 @@
         <h3>6-DOF Robotic Arm Control and AI Vision Implementation</h3>
         <span class="card-date">Jul 2025 — Dec 2025</span>
       </div>
+      <div class="video-block" data-embed-src="https://www.youtube-nocookie.com/embed/OKBqRK-R4TM?autoplay=1" data-embed-title="6-DOF robotic arm demo">
+        <div class="video-cover">
+          <img src="dofbot-arm.jpg" alt="6-DOF robotic arm demo cover" loading="lazy">
+        </div>
+        <button class="play-btn" type="button">▶ Play video</button>
+        <div class="video-frame"></div>
+      </div>
       <p class="card-desc">Built a robotic arm control and AI vision system on a Yahboom Dofbot SE (6-DOF).</p>
       <ul class="card-roles">
         <li>Assembled the hardware and configured the full development environment (VMware, Ubuntu, ROS)</li>
@@ -446,6 +487,13 @@
       <div class="card-top">
         <h3>Autonomous Driving Project using Xycar Simulator</h3>
         <span class="card-date">Jul 2022 — Sep 2022</span>
+      </div>
+      <div class="video-block" data-embed-src="https://www.youtube-nocookie.com/embed/ZdmvDs9hrYA?autoplay=1" data-embed-title="Xycar autonomous driving demo">
+        <div class="video-cover">
+          <img src="xycar.jpg" alt="Xycar autonomous driving demo cover" loading="lazy">
+        </div>
+        <button class="play-btn" type="button">▶ Play video</button>
+        <div class="video-frame"></div>
       </div>
       <p class="card-desc">Completed the track in under 3 minutes using lane detection alone.</p>
       <ul class="card-roles">
@@ -461,6 +509,9 @@
         <h3>Vehicle with Object Detection and Automatic Reporting System</h3>
         <span class="card-date">Mar 2022 — Jun 2022</span>
       </div>
+      <div class="media media--video">
+        <iframe src="https://drive.google.com/file/d/1bmhOR-NLVXzLEd5X6vnmJjZrVMYvLxDx/preview" title="Object detection and reporting vehicle demo" loading="lazy" allow="autoplay" allowfullscreen></iframe>
+      </div>
       <p class="card-desc">Built an obstacle-avoidance vehicle on Jetson Nano using ROS and Python.</p>
       <ul class="card-roles">
         <li>Built an automatic reporting system using shock-detection sensors and the Kakao API</li>
@@ -474,6 +525,9 @@
         <h3>Drone Delivery Service for Underdeveloped Areas</h3>
         <span class="card-date">Mar 2022 — Dec 2022</span>
       </div>
+      <div class="media media--video">
+        <iframe src="https://drive.google.com/file/d/1XLDV68GJP1l7WW4hgyZwLk-pMHVz3q-J/preview" title="Drone delivery service demo" loading="lazy" allow="autoplay" allowfullscreen></iframe>
+      </div>
       <p class="card-desc">Streamed live video over UDP from a camera-equipped drone in Gazebo, controlled via QGroundControl and PX4 SITL.</p>
       <ul class="card-roles">
         <li>Modeled and visualized the drone in Autodesk Fusion 360</li>
@@ -482,25 +536,9 @@
     </div>
   </section>
 
-  <!-- ============ PUBLICATIONS ============ -->
-  <section id="publications">
-    <div class="section-head reveal">
-      <p class="eyebrow">PUBLICATIONS</p>
-      <h2>Publications</h2>
-    </div>
-    <div class="pub-card reveal">
-      <span class="pub-tag">PAPER</span>
-      <div>
-        <h3>Perspective Transform-Based Data Augmentation to Mitigate Minority Class Imbalance for Road Marking Semantic Segmentation</h3>
-        <p class="pub-meta">Proceedings of the 2026 ICROS Conference · 3rd Author</p>
-      </div>
-    </div>
-  </section>
-
   <!-- ============ AWARDS ============ -->
   <section id="awards">
     <div class="section-head reveal">
-      <p class="eyebrow">AWARDS</p>
       <h2>Awards</h2>
     </div>
     <div class="reveal">
@@ -524,8 +562,7 @@
   <!-- ============ SKILLS ============ -->
   <section id="skills">
     <div class="section-head reveal">
-      <p class="eyebrow">SKILLS</p>
-      <h2>Skills & Tools</h2>
+      <h2>Skills</h2>
     </div>
     <div class="skill-groups reveal">
       <div class="skill-group">
@@ -557,26 +594,10 @@
     </div>
   </section>
 
-  <!-- ============ EDUCATION ============ -->
-  <section id="education">
-    <div class="section-head reveal">
-      <p class="eyebrow">EDUCATION</p>
-      <h2>Education</h2>
-    </div>
-    <div class="edu-card reveal">
-      <div>
-        <h3>Kyonggi University, Suwon, Korea</h3>
-        <p class="edu-meta">Bachelor of Mechanical Systems Engineering, Intelligent Robotics<br>Mar 2021 — Present</p>
-      </div>
-      <span class="edu-gpa">GPA 3.4 / 4.5</span>
-    </div>
-  </section>
-
   <!-- ============ CONTACT ============ -->
   <section id="contact" class="contact">
     <div class="reveal">
-      <p class="eyebrow">GET IN TOUCH</p>
-      <h2>Let's talk robotics</h2>
+      <h2>Get in touch</h2>
       <p>I'm looking to continue into graduate research in robotics — manipulator control, simulation, and learning-based manipulation. I'd welcome the chance to talk about a lab, a project, or just robotics in general.</p>
       <dl class="contact-grid">
         <div><dt>Email</dt><dd><a href="mailto:jg2087@naver.com">jg2087@naver.com</a></dd></div>
@@ -595,6 +616,25 @@
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // click-to-play video covers
+  document.querySelectorAll('.play-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const block = btn.closest('.video-block');
+      if (!block) return;
+      const frame = block.querySelector('.video-frame');
+      if (frame && !frame.querySelector('iframe')) {
+        const iframe = document.createElement('iframe');
+        iframe.src = block.dataset.embedSrc;
+        iframe.title = block.dataset.embedTitle || 'Video';
+        iframe.loading = 'lazy';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowFullscreen = true;
+        frame.appendChild(iframe);
+      }
+      block.classList.add('is-playing');
+    });
+  });
 
   // mobile nav toggle
   const navToggle = document.getElementById('navToggle');
@@ -621,68 +661,6 @@
     revealEls.forEach(el => io.observe(el));
   }
 </script>
-
-<style>
-  /* ============ HERO SVG ANIMATION ============ */
-  .link.draw, .draw-hand{
-    stroke-dasharray: 1px;
-    stroke-dashoffset: 1px;
-    animation: drawPath 0.8s ease forwards;
-  }
-  .joint.pop{
-    transform-origin:center;
-    transform-box: fill-box;
-    transform: scale(0);
-    animation: popIn 0.4s ease forwards;
-  }
-  circle.joint.pop:nth-of-type(1){ animation-delay:.05s; }
-  .link.draw:nth-of-type(1){ animation-delay:0s; }
-
-  .arm-idle circle.joint.pop:nth-of-type(1){ animation-delay:.35s; }
-  .arm-idle path.link.draw:nth-of-type(1){ animation-delay:.25s; }
-  .arm-idle circle.joint.pop:nth-of-type(2){ animation-delay:.65s; }
-  .arm-idle path.link.draw:nth-of-type(2){ animation-delay:.55s; }
-  .arm-idle circle.joint.pop:nth-of-type(3){ animation-delay:.95s; }
-  .arm-idle path.link.draw:nth-of-type(3){ animation-delay:.85s; }
-  .arm-idle path.link.draw:nth-of-type(4){ animation-delay:1.05s; }
-  .arm-idle path.link.draw:nth-of-type(5){ animation-delay:1.05s; }
-
-  .draw-hand{ animation-delay:1.15s; animation-duration:1s; }
-
-  .pulse{
-    opacity:0;
-    animation: pulseDot 2.4s ease-in-out 1.5s infinite;
-  }
-
-  .arm-idle{
-    transform-origin: 236px 244px;
-    animation: idleSway 6.5s ease-in-out 1.6s infinite alternate;
-  }
-
-  @keyframes drawPath{
-    from{ stroke-dashoffset:1px; }
-    to{ stroke-dashoffset:0; }
-  }
-  @keyframes popIn{
-    from{ transform:scale(0); }
-    to{ transform:scale(1); }
-  }
-  @keyframes pulseDot{
-    0%,100%{ opacity:.25; transform:scale(1); }
-    50%{ opacity:.9; transform:scale(1.6); }
-  }
-  @keyframes idleSway{
-    from{ transform:rotate(-1.4deg); }
-    to{ transform:rotate(1.4deg); }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .link.draw, .draw-hand{ stroke-dashoffset:0; animation:none; }
-    .joint.pop{ transform:scale(1); animation:none; }
-    .pulse{ opacity:.6; animation:none; }
-    .arm-idle{ animation:none; }
-  }
-</style>
 
 </body>
 </html>
